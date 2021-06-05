@@ -1,14 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { db } from './src/firebase-config'
+import {db} from './src/firebase-config'
 
 export default function App() {
 
-  const [data, setData] = useState("")
+  const [data, setData] = useState('')
 
   useEffect(() => {
-    db.ref('/reactjs').on('value', querySnapShot => {
+      db.ref('/reactjs').on('value', querySnapShot => {
       let response = querySnapShot.val() ? querySnapShot.val() : {};
       setData(JSON.stringify(response))
     });
@@ -17,7 +17,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>{data}</Text>
+      <Text>Welvome to Expo Do u Need anyTshing {data}</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -26,7 +26,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#AA00BB',
+    backgroundColor: '#FFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
