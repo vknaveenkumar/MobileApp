@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, StatusBar, View, BackHandler, Alert } from "react-native";
+import { Button, StyleSheet, Text, StatusBar, View, BackHandler } from "react-native";
 import Category from "./src/component/category";
 import QuestionsDisplayer from "./src/component/QuestionsDisplayer";
 import TopBar from "./src/component/TopBar";
@@ -16,40 +16,58 @@ import { getData } from './src/services';
 
 
 export default function App() {
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
   const [selectedCategory, setSelectedCaetgory] = useState("");
-  const [interstitialAd, setInterstitialAd] = useState(false)
+  const [showFullAd, setShowFullAd] = useState(false)
 
-  const getApiData = async() =>{
-     let data = await getData('AppData') 
-     setData(JSON.parse(JSON.stringify(data)))
+  const getApiData = async () => {
+    let data = await getData('AppData')
+    //  alert(JSON.parse(JSON.stringify(data)))
+    setData(JSON.parse(JSON.stringify(data)))
+  }
+
+  const showInterestialOnLoad = async () => {
+    await AdMobInterstitial.setAdUnitID(interestialAdID);
+    await AdMobInterstitial.requestAdAsync(); 
+    await AdMobInterstitial.addEventListener('interstitialDidFailToLoad',()=>{alert('failed')})
   }
 
   useEffect(() => {
     const backAction = async () => {
-      await AdMobInterstitial.setAdUnitID(interestialAdID);
-      await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
-      await AdMobInterstitial.showAdAsync().then(setInterstitialAd(true));
+
+    //  // alert(showFullAd)
+      if (!showFullAd) {
+        setShowFullAd(true)
+       // alert(showFullAd)
+        await AdMobInterstitial.getIsReadyAsync(async (data) => {
+          // alert(JSON.stringify(data))
+          if (data) {
+            await AdMobInterstitial.showAdAsync()
+          } else {
+            await BackHandler.exitApp()
+          }
+        })
+        return true
+      } else {
+        return false
+      }
     };
 
-    // const closeInterstitalAd = AdMobInterstitial.addEventListener(
-    //   "interstitialDidClose",
-    //   ()=>{setInterstitialAd(false)}
-    // );
 
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       backAction
     );
 
-    getApiData()
+    getApiData();
+    showInterestialOnLoad();
 
     return () => {
       backHandler.remove();
     }
   }, []);
 
- 
+
   const handleCategory = (category) => {
     setSelectedCaetgory(category);
   };
