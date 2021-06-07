@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, StatusBar, View } from "react-native";
+import { Button, StyleSheet, Text, StatusBar, View, BackHandler, Alert } from "react-native";
 import Category from "./src/component/category";
 import QuestionsDisplayer from "./src/component/QuestionsDisplayer";
 import TopBar from "./src/component/TopBar";
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+  setTestDeviceIDAsync,
+} from 'expo-ads-admob';
 import { db } from "./src/firebase-config";
 
 export default function App() {
   const [data, setData] = useState("");
   const [selectedCategory, setSelectedCaetgory] = useState("");
+  const [interstitialAd, setInterstitialAd] = useState(false)
+
   const answer =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
   const tempData = [
@@ -53,18 +62,36 @@ export default function App() {
     },
   ];
 
-  // useEffect(() => {
-  //   db.ref(" ").on("value", (querySnapShot) => {
-  //     let response = querySnapShot.val() || {};
-  //     setData(JSON.stringify(response));
-  //   });
-  // }, []);
+  useEffect(async () => {
+
+
+    const backAction = async () => {
+      await AdMobInterstitial.setAdUnitID('ca-app-pub-3940256099942544/1033173712'); // Test ID, Replace with your-admob-unit-id
+      await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
+      await AdMobInterstitial.showAdAsync().then(setInterstitialAd(true));
+    };
+
+    // const closeInterstitalAd = AdMobInterstitial.addEventListener(
+    //   "interstitialDidClose",
+    //   ()=>{setInterstitialAd(false)}
+    // );
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => {
+      backHandler.remove();
+    }
+  }, []);
+
 
   const handleCategory = (category) => {
-    debugger;
-    console.log(category);
     setSelectedCaetgory(category);
   };
+
+
 
   return (
     <View style={styles.container}>
@@ -89,6 +116,10 @@ export default function App() {
           <Category onClick={handleCategory} data={tempData} />
         )}
       </View>
+      <AdMobBanner
+        bannerSize="fullBanner"
+        adUnitID="ca-app-pub-3940256099942544/6300978111"
+        onDidFailToReceiveAdWithError={() => { alert('error') }} />
     </View>
   );
 }
@@ -105,3 +136,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
+
+
+
+ // useEffect(() => {
+  //   db.ref(" ").on("value", (querySnapShot) => {
+  //     let response = querySnapShot.val() || {};
+  //     setData(JSON.stringify(response));
+  //   });
+  // }, []);
