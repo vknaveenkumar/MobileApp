@@ -13,15 +13,20 @@ const QuestionsDisplayer = ({ data, onBackPress }) => {
   return (
     <View>
       <View style={styles.categoryContain}>
-        <TouchableOpacity onPress={onBackPress}>
-          <Text style={styles.title}>Back</Text>
+        <TouchableOpacity
+          onPress={onBackPress}
+          style={{ ...styles.thridWidth, textAlign: "left" }}
+        >
+          <Text style={{ ...styles.title, textAlign: "left" }}>Back</Text>
         </TouchableOpacity>
         <Text style={styles.category}>{data?.category}</Text>
-        <TouchableOpacity onPress={onBackPress}>
-          <Text style={styles.title}>1/4</Text>
+        <TouchableOpacity onPress={onBackPress} style={styles.thridWidth}>
+          <Text style={{ ...styles.title, textAlign: "right" }}>
+            {data?.qAndA?.length} Questions
+          </Text>
         </TouchableOpacity>
       </View>
-      <ScrollView>
+      <ScrollView style={styles.container}>
         {data?.qAndA?.map((quesAns, key) => (
           <QuestionAnswer data={quesAns} key={key} index={key + 1} />
         ))}
@@ -35,19 +40,29 @@ QuestionsDisplayer.propTypes = {};
 export default QuestionsDisplayer;
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 20,
+    marginBottom: 75,
+  },
+  thridWidth: {
+    width: "33%",
+    height: 40,
+    flex: 1,
+    justifyContent: "center",
+  },
   title: {
     fontSize: 12,
-    fontWeight: "bold",
-    fontFamily: "Roboto",
     paddingLeft: 12,
     paddingRight: 12,
+    color: "#495663",
   },
   categoryContain: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    backgroundColor: "#77777777",
+    backgroundColor: "#e8e8e8",
+    padding: 10,
   },
   category: {
     margin: 0,
@@ -55,6 +70,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     // borderRadius: 2,
     padding: 10,
+    fontSize: 16,
     textAlign: "center",
+    color: "#e0c55e",
   },
 });
