@@ -24,44 +24,30 @@ import { getData } from "./src/services";
 export default function App() {
   const [data, setData] = useState([]);
   const [selectedCategory, setSelectedCaetgory] = useState("");
-  const [showFullAd, setShowFullAd] = useState(false);
+  const [showAd, setShowAd] = useState(false);
 
   const getApiData = async () => {
-    let data = await getData("AppData");
-    //  alert(JSON.parse(JSON.stringify(data)))
-    setData(JSON.parse(JSON.stringify(data)));
-  };
+    let data = await getData('@AppData')
+    setData(data)
+  }
 
   const showInterestialOnLoad = async () => {
     await AdMobInterstitial.setAdUnitID(interestialAdID);
-    await AdMobInterstitial.requestAdAsync();
-    await AdMobInterstitial.addEventListener(
-      "interstitialDidFailToLoad",
-      () => {
-        alert("failed");
-      }
-    );
-  };
+    await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
+    await AdMobInterstitial.addEventListener('interstitialDidClose', function(){
+       BackHandler.exitApp()
+    })
+  }
 
   useEffect(() => {
     const backAction = async () => {
-      //  // alert(showFullAd)
-      BackHandler.exitApp();
-      // if (!showFullAd) {
-      //   setShowFullAd(true);
-      //   // alert(showFullAd)
-      //   await AdMobInterstitial.getIsReadyAsync(async (data) => {
-      //     // alert(JSON.stringify(data))
-      //     if (data) {
-      //       await AdMobInterstitial.showAdAsync();
-      //     } else {
-      //       await BackHandler.exitApp();
-      //     }
-      //   });
-      //   return true;
-      // } else {
-      //   return false;
-      // }
+      try {
+        if (await AdMobInterstitial.getIsReadyAsync()) {
+          await AdMobInterstitial.showAdAsync()
+        }
+      } catch (err) {
+
+      }
     };
 
     const backHandler = BackHandler.addEventListener(
