@@ -10,7 +10,6 @@ import {
 import QuestionAnswer from "../QuestionAnswer";
 
 const QuestionsDisplayer = ({ data, onBackPress }) => {
-  console.log("11===>",data)
   return (
     <View>
       <View style={styles.categoryContain}>

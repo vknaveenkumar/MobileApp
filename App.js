@@ -68,7 +68,6 @@ export default function App() {
     setSelectedCaetgory(category);
   };
 
-  console.log("my category",selectedCategory)
   return (
     <View style={styles.container}>
       <View

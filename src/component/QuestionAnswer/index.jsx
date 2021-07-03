@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { AdMobBanner, PublisherBanner } from "expo-ads-admob";
+import Answers from "../Answers";
 
 const QuestionAnswer = ({ data, index }) => {
   const [expand, setExpand] = useState(false);
   const handleExpand = () => {
     setExpand((prev) => !prev);
   };
-  console.log("sc",data)
+  console.log("all my answers==>", data.answers)
   return (
     <>
       <View style={styles.container}>
@@ -21,19 +22,20 @@ const QuestionAnswer = ({ data, index }) => {
             <Text style={styles.questionText}>{data?.questions}</Text>
           </TouchableOpacity>
         </View>
-        {expand || true ? (
+        {expand ? (
           <View style={styles.answer}>
-            {/* <Text style={styles.answerText}>{data?.ans}</Text> */}
-            <Text style={styles.answerText}>{data?.answers[0].answer}</Text>
+            {data?.answers?.map((answer, index) =>
+              (<Answers key={index} style={styles.answerText} answer={answer.answer}  index={index}/>))
+            }
           </View>
         ) : null}
       </View>
-      {index % 3 === 0 ? (
+      {index % 5 === 0 ? (
         <AdMobBanner
           bannerSize="fullBanner"
           adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
           servePersonalizedAds // true or false
-          onDidFailToReceiveAdWithError={() => {}}
+          onDidFailToReceiveAdWithError={() => { }}
         />
       ) : null}
     </>
