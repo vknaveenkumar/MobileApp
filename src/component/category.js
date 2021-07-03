@@ -9,6 +9,7 @@ export default function Category({ onClick, data }) {
         <Card
           onClick={() => onClick(itm.category)}
           category={itm.category}
+          title={itm.name}
           key={index}
           index={index + 1}
         />

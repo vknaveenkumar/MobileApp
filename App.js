@@ -68,6 +68,7 @@ export default function App() {
     setSelectedCaetgory(category);
   };
 
+  console.log("my category",selectedCategory)
   return (
     <View style={styles.container}>
       <View
@@ -93,7 +94,7 @@ export default function App() {
         bannerSize="fullBanner"
         adUnitID={bannerAdId}
         onDidFailToReceiveAdWithError={() => {
-          alert("error");
+          //alert("error");
         }}
       />
     </View>

@@ -10,6 +10,7 @@ import {
 import QuestionAnswer from "../QuestionAnswer";
 
 const QuestionsDisplayer = ({ data, onBackPress }) => {
+  console.log("11===>",data)
   return (
     <View>
       <View style={styles.categoryContain}>
@@ -27,7 +28,7 @@ const QuestionsDisplayer = ({ data, onBackPress }) => {
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.container}>
-        {data?.qAndA?.map((quesAns, key) => (
+        {data?.QAndA?.map((quesAns, key) => (
           <QuestionAnswer data={quesAns} key={key} index={key + 1} />
         ))}
       </ScrollView>

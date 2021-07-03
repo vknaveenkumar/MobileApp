@@ -8,6 +8,7 @@ const QuestionAnswer = ({ data, index }) => {
   const handleExpand = () => {
     setExpand((prev) => !prev);
   };
+  console.log("sc",data)
   return (
     <>
       <View style={styles.container}>
@@ -17,12 +18,13 @@ const QuestionAnswer = ({ data, index }) => {
             style={styles.questionContain}
           >
             <Text style={styles.index}>#{index}</Text>
-            <Text style={styles.questionText}>{data?.ques}</Text>
+            <Text style={styles.questionText}>{data?.questions}</Text>
           </TouchableOpacity>
         </View>
         {expand || true ? (
           <View style={styles.answer}>
-            <Text style={styles.answerText}>{data?.ans}</Text>
+            {/* <Text style={styles.answerText}>{data?.ans}</Text> */}
+            <Text style={styles.answerText}>{data?.answers[0].answer}</Text>
           </View>
         ) : null}
       </View>

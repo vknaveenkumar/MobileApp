@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-export default function Card({ category, onClick, index }) {
+export default function Card({ title,category, onClick, index }) {
   return (
     <TouchableOpacity style={styles.card} onPress={onClick}>
       <View style={styles.flex}>
-        <Text style={styles.cardTitle}>{category}</Text>
+        <Text style={styles.cardTitle}>{title}</Text>
         <Text style={styles.index}>{index}</Text>
       </View>
     </TouchableOpacity>

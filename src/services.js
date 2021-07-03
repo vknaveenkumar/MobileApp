@@ -51,9 +51,9 @@ export const getData = async (key) => {
     try {
         let data = await retrieveData(key)
         if (data === null || data === undefined) {
-            // Do APi call here
-            data = tempData
-            await storeData(key, tempData)
+            let res = await fetch("https://mobileapp-7db4e-default-rtdb.firebaseio.com/.json");
+            const records = await res.json(); 
+            await storeData(key, records)
         }
         return data 
     } catch (error) {
