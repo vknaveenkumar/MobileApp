@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   content: {
-    flex: 15,
+    flex: 18,
     backgroundColor: "#263842",
   },
 });

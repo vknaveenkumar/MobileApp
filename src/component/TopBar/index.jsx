@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    elevation:1
   },
   title: {
     color: "#495663",

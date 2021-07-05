@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { AdMobBanner, PublisherBanner } from "expo-ads-admob";
+import { AdMobBanner } from "expo-ads-admob";
 import Answers from "../Answers";
 
 const QuestionAnswer = ({ data, index }) => {
@@ -18,19 +18,24 @@ const QuestionAnswer = ({ data, index }) => {
             onPress={handleExpand}
             style={styles.questionContain}
           >
-            <Text style={styles.index}>#{index}</Text>
+            {/* <Text style={styles.index}>#{index}</Text> */}
             <Text style={styles.questionText}>{data?.questions}</Text>
           </TouchableOpacity>
         </View>
         {expand ? (
-          <View style={styles.answer}>
-            {data?.answers?.map((answer, index) =>
-              (<Answers key={index} style={styles.answerText} answer={answer.answer}  index={index}/>))
-            }
-          </View>
+          <>
+            <View style={styles.answer}>
+              {data?.answers?.map((answer, index) =>
+                (<Answers key={index} style={styles.answerText} answer={answer.answer} index={index} />))
+              }
+            </View>
+            <View style={styles.options}>
+              <Text style={styles.options}>Options</Text>
+            </View>
+          </>
         ) : null}
       </View>
-      {index % 5 === 0 ? (
+      {index % 10 === 0 ? (
         <AdMobBanner
           bannerSize="fullBanner"
           adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
@@ -41,7 +46,9 @@ const QuestionAnswer = ({ data, index }) => {
     </>
   );
 };
-
+{/* <View key={item.id} style={styles.card}>
+      <Text style={styles.fullNameText}>{item.questions}</Text>
+    </View> */}
 QuestionAnswer.propTypes = {};
 
 export default QuestionAnswer;
@@ -51,10 +58,12 @@ const styles = StyleSheet.create({
     width: "95%",
     backgroundColor: "#fff",
     margin: 10,
-    elevation: 2,
+    elevation: 10,
     justifyContent: "center",
-    borderRadius: 2,
-    padding: 10,
+    // borderTopLeftRadius: 15,
+    // borderTopRightRadius: 15,
+    borderRadius:15,
+    //padding: 5,
     overflow: "hidden",
   },
   questionContain: {
@@ -64,13 +73,37 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   question: {
-    padding: 16,
+    padding: 10,
     flexDirection: "row",
   },
   answer: {
     padding: 10,
     borderColor: "#495663",
-    borderTopWidth: 1,
+    borderTopWidth: 0.5,
+  },
+  questionText: {
+    color: "#495663",
+    fontWeight: "bold",
+    lineHeight: 20,
+    fontSize: 16,
+    opacity: 0.9,
+  },
+  answerText: {
+    color: "#495663",
+    fontSize: 12,
+    lineHeight: 24,
+    opacity: 0.8,
+    textAlign: "justify",
+  },
+  options:{
+    color: "#495663",
+    fontSize: 12,
+    lineHeight: 24,
+    opacity: 0.8,
+    //borderWidth:0.5,
+    textAlign:'center',
+   // textAlign: "justify",
+    backgroundColor:'#DCDCDC'
   },
   index: {
     color: "#efd81d",
@@ -81,19 +114,5 @@ const styles = StyleSheet.create({
     right: -24,
     fontWeight: "bold",
     opacity: 0.4,
-  },
-  questionText: {
-    color: "#495663",
-    fontWeight: "bold",
-    lineHeight: 20,
-    fontSize: 20,
-    opacity: 0.9,
-  },
-  answerText: {
-    color: "#495663",
-    fontSize: 16,
-    lineHeight: 24,
-    opacity: 0.8,
-    textAlign: "justify",
   },
 });

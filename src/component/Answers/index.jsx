@@ -8,7 +8,7 @@ const Answers = ({ answer, index }) => {
     return (
         <>
             <View >
-                <Text  style={styles.answerTitle}>{`Answer ${index + 1}`}</Text>
+                <Text  style={styles.answerTitle}>{`Answer:${index + 1}`}</Text>
                 <Text style={styles.answerText}>{answer}</Text>
             </View>
         </>
