@@ -17,7 +17,6 @@ import {
   AdMobRewarded,
   setTestDeviceIDAsync,
 } from "expo-ads-admob";
-import { db } from "./src/firebase-config";
 import { bannerAdId, interestialAdID } from "./src/env";
 import { getData } from "./src/services";
 
@@ -109,6 +108,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 15,
-    backgroundColor: "#f4f4f4",
+    backgroundColor: "#263842",
   },
 });

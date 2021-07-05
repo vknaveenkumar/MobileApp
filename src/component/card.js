@@ -5,52 +5,50 @@ import {
   View,
   Image,
   Button,
+  ImageBackground,
   TouchableOpacity,
 } from "react-native";
+import { } from './javascript.jpg'
 
-export default function Card({ title,category, onClick, index }) {
+export default function Card({ title, category, onClick, index }) {
   return (
     <TouchableOpacity style={styles.card} onPress={onClick}>
-      <View style={styles.flex}>
-        <Text style={styles.cardTitle}>{title}</Text>
-        <Text style={styles.index}>{index}</Text>
-      </View>
+      {/* require('./javascript.jpg') */}
+      <ImageBackground imageStyle={{ borderTopLeftRadius: 15, borderTopRightRadius: 15 }} source={require('./javascript.jpg')} resizeMode='cover' style={styles.image}>
+        <View style={styles.cardTitle}>
+          <Text>No of Questions : 19 </Text>
+          <Text>{title}</Text>
+        </View>
+      </ImageBackground>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    width: "90%",
     backgroundColor: "#fff",
-    margin: 24,
-    elevation: 5,
-    justifyContent: "center",
-    // borderRadius: 5,
-    borderLeftWidth: 4,
-    borderLeftColor: "#495663",
-    padding: 15,
-    position: "relative",
-    overflow: "hidden",
+    margin: 30,
+    elevation: 20,
+    height: 150,
+    flexBasis: '35%',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15
   },
-  flex: {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
+  image: {
+    width: null,
+    height: "100%",
   },
   cardTitle: {
-    textAlign: "left",
-    margin: 10,
+    padding: 5,
+    paddingLeft: 10,
     color: "#495663",
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
-  },
-  index: {
-    color: "#f6d867",
-    fontSize: 100,
-    fontWeight: "bold",
-    position: "absolute",
-    right: -10,
-    opacity: 0.3,
+    opacity: 0.5,
+   // backgroundColor: '#F0DB4F', //javascript yellow
+    backgroundColor: '#77889F', 
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
   },
 });

@@ -1,10 +1,10 @@
 import React from "react";
 import Card from "./card";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function Category({ onClick, data }) {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {data.map((itm, index) => (
         <Card
           onClick={() => onClick(itm.category)}
@@ -20,6 +20,7 @@ export default function Category({ onClick, data }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   },
 });

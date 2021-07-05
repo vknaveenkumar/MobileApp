@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ImageBackground,
 } from "react-native";
 import QuestionAnswer from "../QuestionAnswer";
 
@@ -27,9 +28,15 @@ const QuestionsDisplayer = ({ data, onBackPress }) => {
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.container}>
-        {data?.QAndA?.map((quesAns, key) => (
-          <QuestionAnswer data={quesAns} key={key} index={key + 1} />
-        ))}
+        <View style={styles.imageContainer}>
+          <ImageBackground source={require('../javascript.jpg')} resizeMode='stretch' style={styles.image}>
+          </ImageBackground>
+        </View>
+        <View style={styles.answerList}>
+          {data?.QAndA?.map((quesAns, key) => (
+            <QuestionAnswer data={quesAns} key={key} index={key + 1} />
+          ))}
+        </View>
       </ScrollView>
     </View>
   );
@@ -41,8 +48,15 @@ export default QuestionsDisplayer;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 0,
     marginBottom: 75,
+  },
+  imageContainer: {
+    height: 200,
+  },
+  image: {
+    width: null,
+    height: "100%",
   },
   thridWidth: {
     width: "33%",
@@ -61,17 +75,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    backgroundColor: "#e8e8e8",
-    padding: 10,
+    backgroundColor: "grey",
   },
   category: {
     margin: 0,
     // elevation: 5,
     justifyContent: "center",
     // borderRadius: 2,
-    padding: 10,
+    // padding: 10,
     fontSize: 16,
     textAlign: "center",
     color: "#e0c55e",
   },
+  answerList:{
+    marginTop : -25
+  }
 });
