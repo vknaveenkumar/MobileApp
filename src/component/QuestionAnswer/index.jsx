@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   questionText: {
     color: "#495663",
-    fontWeight: "800",
+    fontWeight: "bold",
     lineHeight: 20,
     fontSize: 16,
     opacity: 0.9,
