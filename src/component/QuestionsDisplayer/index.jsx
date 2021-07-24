@@ -85,7 +85,7 @@ const QuestionsDisplayer = ({ data, onBackPress }) => {
           source={require('../../images/javascript3.jpg')}
         />
 
-        {showNavigation && <Text style={styles.backButton}>Back</Text>}
+        {showNavigation && <Text onPress={onBackPress} style={styles.backButton}>Back</Text>}
 
       </Animated.View>
 
