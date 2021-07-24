@@ -9,7 +9,7 @@ const Answers = ({ answer, index }) => {
         <>
             <View >
                 <Text  style={styles.answerTitle}>{`Answer:${index + 1}`}</Text>
-                <Text style={styles.answerText}>{answer}</Text>
+               <Text style={styles.answerText}> {'\t'}{'\t'}{answer}</Text>
             </View>
         </>
     );
@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
     },
     answerText: {
         color: "#495663",
-        fontSize: 16,
+        fontSize: 14,
         lineHeight: 24,
         opacity: 0.8,
-        textAlign: "justify",
+        textAlign: "left",
+       // textInde
     },
 });

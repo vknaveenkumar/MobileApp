@@ -24,14 +24,14 @@ const QuestionAnswer = ({ data, index }) => {
         </View>
         {expand ? (
           <>
-            <View style={styles.answer}>
+            <View style={styles.answerContainer}>
               {data?.answers?.map((answer, index) =>
-                (<Answers key={index} style={styles.answerText} answer={answer.answer} index={index} />))
+                (<Answers key={index}  answer={answer.answer} index={index} />))
               }
             </View>
-            <View style={styles.options}>
+            {/* <View style={styles.options}>
               <Text style={styles.options}>Options</Text>
-            </View>
+            </View> */}
           </>
         ) : null}
       </View>
@@ -46,9 +46,7 @@ const QuestionAnswer = ({ data, index }) => {
     </>
   );
 };
-{/* <View key={item.id} style={styles.card}>
-      <Text style={styles.fullNameText}>{item.questions}</Text>
-    </View> */}
+
 QuestionAnswer.propTypes = {};
 
 export default QuestionAnswer;
@@ -60,10 +58,8 @@ const styles = StyleSheet.create({
     margin: 10,
     elevation: 10,
     justifyContent: "center",
-    // borderTopLeftRadius: 15,
-    // borderTopRightRadius: 15,
-    borderRadius:15,
-    //padding: 5,
+    borderRadius:5,
+    padding: 5,
     overflow: "hidden",
   },
   questionContain: {
@@ -76,33 +72,24 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
   },
-  answer: {
-    padding: 10,
-    borderColor: "#495663",
-    borderTopWidth: 0.5,
-  },
   questionText: {
     color: "#495663",
-    fontWeight: "bold",
+    fontWeight: "800",
     lineHeight: 20,
     fontSize: 16,
     opacity: 0.9,
   },
-  answerText: {
-    color: "#495663",
-    fontSize: 12,
-    lineHeight: 24,
-    opacity: 0.8,
-    textAlign: "justify",
+  answerContainer: {
+    padding: 10,
+    borderColor: "#495663",
+    borderTopWidth: 0.5,
   },
   options:{
     color: "#495663",
     fontSize: 12,
     lineHeight: 24,
     opacity: 0.8,
-    //borderWidth:0.5,
     textAlign:'center',
-   // textAlign: "justify",
     backgroundColor:'#DCDCDC'
   },
   index: {
