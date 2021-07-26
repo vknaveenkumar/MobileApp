@@ -5,10 +5,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const getData = async (key) => {
     try {
+        await clearCache()
         let data = await retrieveData(key)
         if (data === null || data === undefined) {
             let res = await fetch("https://mobileapp-7db4e-default-rtdb.firebaseio.com/.json");
             const records = await res.json(); 
+            data = records;
             await storeData(key, records)
         }
         return data
@@ -47,4 +49,9 @@ const retrieveData = async (key) => {
         console.log(err)
         return null
     }
+};
+
+
+export const clearCache = async () => {
+    AsyncStorage.clear()
 };

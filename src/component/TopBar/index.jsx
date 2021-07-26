@@ -1,18 +1,20 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { StyleSheet, Image, Text, TouchableOpacity, View } from "react-native";
-import { useEffect } from "react";
+import { StyleSheet, Image, Text, TouchableOpacity, View, TextInput } from "react-native";
+import  Search  from '../Search'
 
-const TopBar = ({ onHomePress }) => {
+
+const TopBar = ({ onHomePress, subHeader,search }) => {
   return (
-    <View style={styles.appBar}>
+    <>
+      <View style={styles.appBar}>
         <TouchableOpacity onPress={onHomePress}>
-          <Text style={styles.title}>JavaScript Master</Text>
+          {subHeader ? <Text style={styles.title}>JavaScript Master</Text> :
+            <Search search={search}/>
+            }
+
         </TouchableOpacity>
-        {/* <TouchableOpacity onPress={onHomePress}>
-          <Text style={styles.title}>Exit</Text>
-        </TouchableOpacity> */}
-    </View>
+      </View>
+    </>
   );
 };
 
@@ -33,12 +35,30 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-  backText:{
+  backText: {
     color: "#495663",
     fontSize: 20,
     fontWeight: "bold",
     //alignSelf:''
     //paddingLeft:5
     //paddingLeft:10
-  }
+  },
+  categoryContain: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    backgroundColor: "grey",
+    height: '5%'
+  },
+  category: {
+    margin: 0,
+    elevation: 5,
+    justifyContent: "center",
+    // borderRadius: 2,
+    padding: 5,
+    fontSize: 16,
+    textAlign: "center",
+    color: "#e0c55e",
+  },
 });

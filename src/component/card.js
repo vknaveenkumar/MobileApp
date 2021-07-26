@@ -13,11 +13,10 @@ import { } from './javascript.jpg'
 export default function Card({ title, category, onClick, index }) {
   return (
     <TouchableOpacity style={styles.card} onPress={onClick}>
-      {/* require('./javascript.jpg') */}
       <ImageBackground imageStyle={{ borderTopLeftRadius: 15, borderTopRightRadius: 15 }} source={require('./javascript.jpg')} resizeMode='cover' style={styles.image}>
         <View style={styles.cardTitle}>
-          <Text>No of Questions : 19 </Text>
-          <Text>{title}</Text>
+          <Text style={styles.cardTitleFont}> Questions: 19 </Text>
+          <Text style={styles.cardTitleFont}>{title}</Text>
         </View>
       </ImageBackground>
     </TouchableOpacity>
@@ -30,7 +29,8 @@ const styles = StyleSheet.create({
     margin: 30,
     elevation: 20,
     height: 150,
-    flexBasis: '35%',
+    //flexBasis: '35%',
+    width:'33%',
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15
   },
@@ -46,9 +46,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     opacity: 0.5,
    // backgroundColor: '#F0DB4F', //javascript yellow
-    backgroundColor: '#77889F', 
+    backgroundColor: '#696969', 
     width: '100%',
     position: 'absolute',
     bottom: 0,
   },
+  cardTitleFont:{
+    color:'white',
+    fontWeight:'bold'
+  }
 });

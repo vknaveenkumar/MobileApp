@@ -18,7 +18,7 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + 100;
 
 
 
-const QuestionsDisplayer = ({ data, onBackPress }) => {
+const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const [showNavigation, setShowNavigation] = useState(true)
 
@@ -61,8 +61,10 @@ const QuestionsDisplayer = ({ data, onBackPress }) => {
                 const offsetY = event.nativeEvent.contentOffset.y
                 if (offsetY > HEADER_MAX_HEIGHT) {
                   setShowNavigation(false)
+                  onScrollInQuestionDisplayer(false)
                 } else {
                   setShowNavigation(true)
+                  onScrollInQuestionDisplayer(true)
                 }
               },
             })
@@ -85,10 +87,9 @@ const QuestionsDisplayer = ({ data, onBackPress }) => {
           source={require('../../images/javascript3.jpg')}
         />
 
-        {showNavigation && <Text onPress={onBackPress} style={styles.backButton}>Back</Text>}
+        {/* {showNavigation && <Text onPress={onBackPress} style={styles.backButton}>Back</Text>} */}
 
       </Animated.View>
-
       {!showNavigation &&
         <View style={styles.categoryContain}>
           <TouchableOpacity
@@ -143,25 +144,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
-  categoryContiner: {
-    //width: 150,
-    //height:50
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  categoryTitle: {
-    height: 105,
-    width: 100,
-    fontSize: 50,
-    borderRadius: 50,
-    backgroundColor: '#f6d867',
-    //flex :1,
-    textAlign: 'center',
-    //marginVertical:'middle',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   backButton: {
     marginTop: 15,
     paddingLeft: 10
@@ -185,12 +167,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#e0c55e",
   },
-  title: {
-    // fontSize: 12,
-    // paddingLeft: 12,
-    // paddingRight: 12,
-    // height: 30,
-    // color: "#495663",
-  },
-
 });

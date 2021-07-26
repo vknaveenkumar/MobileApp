@@ -13,16 +13,16 @@ import TopBar from "./src/component/TopBar";
 import {
   AdMobBanner,
   AdMobInterstitial,
-  PublisherBanner,
-  AdMobRewarded,
-  setTestDeviceIDAsync,
 } from "expo-ads-admob";
 import { bannerAdId, interestialAdID } from "./src/env";
 import { getData } from "./src/services";
 
+
+
 export default function App() {
   const [data, setData] = useState([]);
   const [selectedCategory, setSelectedCaetgory] = useState("");
+  const [subHeader, setSubHeader] = useState(true);
   const [showAd, setShowAd] = useState(false);
 
   const getApiData = async () => {
@@ -33,15 +33,17 @@ export default function App() {
   const showInterestialOnLoad = async () => {
     await AdMobInterstitial.setAdUnitID(interestialAdID);
     await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
-    await AdMobInterstitial.addEventListener('interstitialDidClose', function(){
-       BackHandler.exitApp()
-    })
+  
   }
 
   useEffect(() => {
     const backAction = async () => {
       try {
         if (await AdMobInterstitial.getIsReadyAsync()) {
+          await AdMobInterstitial.addEventListener('interstitialDidClose', function(){ 
+            console.log("on close")
+             BackHandler.exitApp()
+          })
           await AdMobInterstitial.showAdAsync()
         }
       } catch (err) {
@@ -52,7 +54,7 @@ export default function App() {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       backAction
-    );
+    ); 
 
     getApiData();
     showInterestialOnLoad();
@@ -67,6 +69,15 @@ export default function App() {
     setSelectedCaetgory(category);
   };
 
+  const onScrollInQuestionDisplayer = (status)=>{
+    setSubHeader(status)
+  }
+
+  // const search = (status) =>{
+  //   alert(JSON.stringify(data[category]))
+  //    //const filteredData = data.
+  // }
+ 
   return (
     <View style={styles.container}>
       <View
@@ -75,14 +86,20 @@ export default function App() {
         }}
       />
       <TopBar
-        onHomePress={() => setSelectedCaetgory("")}
+        onHomePress={() => {
+          setSelectedCaetgory("");
+          setSubHeader(false)
+        }}
+       // search = {search}
         showBack={!!selectedCategory}
+        subHeader={subHeader}
       />
       <View style={styles.content}>
         {selectedCategory ? (
           <QuestionsDisplayer
             data={data?.filter((itm) => itm.category === selectedCategory)[0]}
-            onBackPress={() => setSelectedCaetgory("")}
+            onScrollInQuestionDisplayer={onScrollInQuestionDisplayer}
+            onBackPress={() =>{ setSelectedCaetgory(""); setSubHeader(true)}}
           />
         ) : (
           <Category onClick={handleCategory} data={data} />
@@ -103,11 +120,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f6d867",
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   content: {
-    flex: 18,
+    flex: 15,
     backgroundColor: "#263842",
   },
 });

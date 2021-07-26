@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Share } from "react-native";
 import { AdMobBanner } from "expo-ads-admob";
 import Answers from "../Answers";
 
@@ -9,7 +8,28 @@ const QuestionAnswer = ({ data, index }) => {
   const handleExpand = () => {
     setExpand((prev) => !prev);
   };
-  console.log("all my answers==>", data.answers)
+
+  const onShare = async () => {
+    //alert('sharing')
+    try {
+      const result = await Share.share({
+        message:
+          'React Native | A framework for building native apps using React',
+      });
+      //alert('sharinssssg',result)
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <>
       <View style={styles.container}>
@@ -18,7 +38,7 @@ const QuestionAnswer = ({ data, index }) => {
             onPress={handleExpand}
             style={styles.questionContain}
           >
-            {/* <Text style={styles.index}>#{index}</Text> */}
+            {/* <Text style={styles.index}>{index}</Text> */}
             <Text style={styles.questionText}>{data?.questions}</Text>
           </TouchableOpacity>
         </View>
@@ -26,12 +46,14 @@ const QuestionAnswer = ({ data, index }) => {
           <>
             <View style={styles.answerContainer}>
               {data?.answers?.map((answer, index) =>
-                (<Answers key={index}  answer={answer.answer} index={index} />))
+                (<Answers key={index} answer={answer.answer} index={index} />))
               }
             </View>
-            {/* <View style={styles.options}>
-              <Text style={styles.options}>Options</Text>
-            </View> */}
+            <TouchableOpacity onPress={onShare}>
+              <View style={styles.options} >
+                <Text style={styles.options}>SHARE</Text>
+              </View>
+            </TouchableOpacity>
           </>
         ) : null}
       </View>
@@ -58,7 +80,7 @@ const styles = StyleSheet.create({
     margin: 10,
     elevation: 10,
     justifyContent: "center",
-    borderRadius:5,
+    //borderRadius:5,
     padding: 5,
     overflow: "hidden",
   },
@@ -84,22 +106,20 @@ const styles = StyleSheet.create({
     borderColor: "#495663",
     borderTopWidth: 0.5,
   },
-  options:{
+  options: {
     color: "#495663",
     fontSize: 12,
     lineHeight: 24,
     opacity: 0.8,
-    textAlign:'center',
-    backgroundColor:'#DCDCDC'
+    textAlign: 'center',
+    backgroundColor: '#DCDCDC'
   },
   index: {
     color: "#efd81d",
-    marginRight: 5,
-    fontSize: 40,
-    position: "absolute",
-    top: -20,
-    right: -24,
-    fontWeight: "bold",
+    fontSize: 20,
     opacity: 0.4,
+    backgroundColor: 'yellow',
+    // marginRight:5,
+    color: "#495663",
   },
 });
