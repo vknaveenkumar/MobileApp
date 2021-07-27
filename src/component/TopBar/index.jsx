@@ -1,17 +1,17 @@
 import React from "react";
 import { StyleSheet, Image, Text, TouchableOpacity, View, TextInput } from "react-native";
-import  Search  from '../Search'
+import Search from '../Search'
 
 
-const TopBar = ({ onHomePress, subHeader,search }) => {
+const TopBar = ({ onHomePress, enableSearch, search }) => {
   return (
     <>
       <View style={styles.appBar}>
         <TouchableOpacity onPress={onHomePress}>
-          {subHeader ? <Text style={styles.title}>JavaScript Master</Text> :
-            <Search search={search}/>
-            }
-
+          {enableSearch ?   <Search search={search} /> :
+            <Text style={styles.title}>JavaScript Master</Text>
+          }
+          {/* <Search search={search} /> */}
         </TouchableOpacity>
       </View>
     </>

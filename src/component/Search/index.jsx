@@ -8,7 +8,7 @@ const Search = ({search}) => {
     const [value, setValue] = useState('')
 
     useEffect(()=>{
-        //search(value)
+        search(value)
     },[value])
 
     return (
@@ -26,7 +26,7 @@ const Search = ({search}) => {
                         height: 25,
                         borderRadius: 100,
                         paddingLeft: 20,
-                        marginTop:5
+                        //marginTop:5
                     }}
                     maxLength={40}
                 />

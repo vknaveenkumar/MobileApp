@@ -3,13 +3,18 @@ import PropTypes from "prop-types";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
-const Answers = ({ answer, index }) => {
+const Answers = ({code, answer, index }) => {
 
     return (
         <>
-            <View >
-                <Text  style={styles.answerTitle}>{`Answer:${index + 1}`}</Text>
-               <Text style={styles.answerText}> {'\t'}{'\t'}{answer}</Text>
+            <View style={{marginTop:5}}>
+                <Text style={styles.answerTitle}>{`Answer:${index + 1}`}</Text>
+                <Text style={styles.answerText}> {'\t'}{'\t'}{answer}</Text>
+                <View style={styles.codeContainer}>
+                    <Text style={styles.codeContainerText}>{`
+ ${code}
+                    `}</Text>
+                </View>
             </View>
         </>
     );
@@ -25,8 +30,8 @@ const styles = StyleSheet.create({
         borderColor: "#495663",
         borderTopWidth: 1,
     },
-    answerTitle:{
-        fontWeight : 'bold',
+    answerTitle: {
+        fontWeight: '900',
     },
     answerText: {
         color: "#495663",
@@ -34,6 +39,19 @@ const styles = StyleSheet.create({
         lineHeight: 24,
         opacity: 0.8,
         textAlign: "left",
-       // textInde
+        fontFamily: 'notoserif'
     },
+    codeContainer: {
+        //height: 50,
+        width: '100%',
+        backgroundColor:'#171717',
+        marginTop: 10,
+       
+    },
+    codeContainerText:{
+        fontSize:13,
+        paddingLeft:10,
+        color:'white',
+        lineHeight:15
+    }
 });

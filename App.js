@@ -20,9 +20,11 @@ import { getData } from "./src/services";
 
 
 export default function App() {
+
   const [data, setData] = useState([]);
   const [selectedCategory, setSelectedCaetgory] = useState("");
-  const [subHeader, setSubHeader] = useState(true);
+  const [enableSearch, setEnableSearch] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('')
   const [showAd, setShowAd] = useState(false);
 
   const getApiData = async () => {
@@ -33,16 +35,16 @@ export default function App() {
   const showInterestialOnLoad = async () => {
     await AdMobInterstitial.setAdUnitID(interestialAdID);
     await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
-  
+
   }
 
   useEffect(() => {
     const backAction = async () => {
       try {
         if (await AdMobInterstitial.getIsReadyAsync()) {
-          await AdMobInterstitial.addEventListener('interstitialDidClose', function(){ 
+          await AdMobInterstitial.addEventListener('interstitialDidClose', function () {
             console.log("on close")
-             BackHandler.exitApp()
+            BackHandler.exitApp()
           })
           await AdMobInterstitial.showAdAsync()
         }
@@ -54,7 +56,7 @@ export default function App() {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       backAction
-    ); 
+    );
 
     getApiData();
     showInterestialOnLoad();
@@ -67,17 +69,36 @@ export default function App() {
 
   const handleCategory = (category) => {
     setSelectedCaetgory(category);
+    if(category == ''){
+      setEnableSearch(false)
+    }else{
+      setEnableSearch(true)
+    }
+     
   };
 
-  const onScrollInQuestionDisplayer = (status)=>{
-    setSubHeader(status)
+  const onScrollInQuestionDisplayer = (status) => {
+    //setEnableSearch(status)
   }
 
-  // const search = (status) =>{
-  //   alert(JSON.stringify(data[category]))
-  //    //const filteredData = data.
-  // }
- 
+  const search = (text) => {
+    setSearchTerm(text)
+  }
+
+  const loadDataBasedOnCategoryAndSearchTerm = () => {
+   // console.log('sssssssssssssss')
+    let selectedCategoryData = data?.filter((itm) => itm.category === selectedCategory)[0]
+    console.log("ssssss",selectedCategoryData)
+    let dataToView = { category: selectedCategoryData.category, name: selectedCategoryData.name, QAndA: selectedCategoryData.QAndA }
+    if (searchTerm !== "") {
+      const filteredDataBasedOnSearchTerm = selectedCategoryData.QAndA.filter(qanda => `${qanda.questions}`.toUpperCase().indexOf(searchTerm.toUpperCase()) >= 0)
+      dataToView.QAndA = filteredDataBasedOnSearchTerm
+    }
+
+    console.log("after converting==>",dataToView)
+    return dataToView
+  }
+
   return (
     <View style={styles.container}>
       <View
@@ -88,18 +109,18 @@ export default function App() {
       <TopBar
         onHomePress={() => {
           setSelectedCaetgory("");
-          setSubHeader(false)
+          setEnableSearch(false)
         }}
-       // search = {search}
+        search={search}
         showBack={!!selectedCategory}
-        subHeader={subHeader}
+        enableSearch={enableSearch}
       />
       <View style={styles.content}>
         {selectedCategory ? (
           <QuestionsDisplayer
-            data={data?.filter((itm) => itm.category === selectedCategory)[0]}
+            data={loadDataBasedOnCategoryAndSearchTerm()}
             onScrollInQuestionDisplayer={onScrollInQuestionDisplayer}
-            onBackPress={() =>{ setSelectedCaetgory(""); setSubHeader(true)}}
+            onBackPress={() => { setSelectedCaetgory(""); setEnableSearch(false) }}
           />
         ) : (
           <Category onClick={handleCategory} data={data} />

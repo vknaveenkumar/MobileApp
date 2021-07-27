@@ -38,6 +38,22 @@ const QuestionAnswer = ({ data, index }) => {
             onPress={handleExpand}
             style={styles.questionContain}
           >
+            <TouchableOpacity
+              style={{
+                marginRight:10,
+                borderWidth: 1,
+                borderColor: 'rgba(0,0,0,0.2)',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 25,
+                height: 25,
+                backgroundColor: '#DCDCDC',
+                borderRadius: 25,
+                borderColor:'#efd81d'
+              }}
+            >
+               <Text style={styles.index}>{index}</Text>
+            </TouchableOpacity>
             {/* <Text style={styles.index}>{index}</Text> */}
             <Text style={styles.questionText}>{data?.questions}</Text>
           </TouchableOpacity>
@@ -46,7 +62,7 @@ const QuestionAnswer = ({ data, index }) => {
           <>
             <View style={styles.answerContainer}>
               {data?.answers?.map((answer, index) =>
-                (<Answers key={index} answer={answer.answer} index={index} />))
+                (<Answers key={index} answer={answer.answer} code={answer.code} index={index} />))
               }
             </View>
             <TouchableOpacity onPress={onShare}>
@@ -75,13 +91,13 @@ export default QuestionAnswer;
 
 const styles = StyleSheet.create({
   container: {
-    width: "95%",
+    width: "94%",
     backgroundColor: "#fff",
-    margin: 10,
+    margin: 8,
     elevation: 10,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     //borderRadius:5,
-    padding: 5,
+    //padding: 5,
     overflow: "hidden",
   },
   questionContain: {
@@ -96,15 +112,16 @@ const styles = StyleSheet.create({
   },
   questionText: {
     color: "#495663",
-    fontWeight: "bold",
+    fontWeight: "normal",
     lineHeight: 20,
     fontSize: 16,
     opacity: 0.9,
   },
   answerContainer: {
-    padding: 10,
+    padding: 5,
     borderColor: "#495663",
     borderTopWidth: 0.5,
+    marginBottom: 10
   },
   options: {
     color: "#495663",
@@ -116,10 +133,8 @@ const styles = StyleSheet.create({
   },
   index: {
     color: "#efd81d",
-    fontSize: 20,
+    fontSize: 15,
     opacity: 0.4,
-    backgroundColor: 'yellow',
-    // marginRight:5,
     color: "#495663",
   },
 });

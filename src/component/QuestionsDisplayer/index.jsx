@@ -61,15 +61,15 @@ const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer }) 
                 const offsetY = event.nativeEvent.contentOffset.y
                 if (offsetY > HEADER_MAX_HEIGHT) {
                   setShowNavigation(false)
-                  onScrollInQuestionDisplayer(false)
+                  onScrollInQuestionDisplayer(true) //to enable search
                 } else {
                   setShowNavigation(true)
-                  onScrollInQuestionDisplayer(true)
+                  onScrollInQuestionDisplayer(false)
                 }
               },
             })
         }>
-        {data.QAndA.map(renderListItem)}
+        {data?.QAndA.map(renderListItem)}
       </Animated.ScrollView>
 
       <Animated.View
@@ -87,10 +87,10 @@ const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer }) 
           source={require('../../images/javascript3.jpg')}
         />
 
-        {/* {showNavigation && <Text onPress={onBackPress} style={styles.backButton}>Back</Text>} */}
+        {showNavigation && <Text onPress={onBackPress} style={styles.backButton}>Back</Text>}
 
       </Animated.View>
-      {!showNavigation &&
+      {/* {!showNavigation &&
         <View style={styles.categoryContain}>
           <TouchableOpacity
             onPress={onBackPress}
@@ -104,7 +104,7 @@ const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer }) 
               {data?.qAndA?.length} Questions
         </Text>
           </TouchableOpacity>
-        </View>}
+        </View>} */}
     </SafeAreaView>
   );
 }
