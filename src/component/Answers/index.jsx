@@ -7,7 +7,7 @@ const Answers = ({code, answer, index }) => {
 
     return (
         <>
-            <View style={{marginTop:5}}>
+            <View style={{marginTop:5,display:'flex',justifyContent:'center',alignItems:'center'}}>
                 <Text style={styles.answerTitle}>{`Answer:${index + 1}`}</Text>
                 <Text style={styles.answerText}> {'\t'}{'\t'}{answer}</Text>
                 <View style={styles.codeContainer}>
@@ -31,22 +31,24 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
     },
     answerTitle: {
-        fontWeight: '900',
+        fontWeight: 'bold',
+        margin:5,
+        alignSelf:'flex-start'
     },
     answerText: {
         color: "#495663",
         fontSize: 14,
-        lineHeight: 24,
+        lineHeight: 20,
         opacity: 0.8,
         textAlign: "left",
-        fontFamily: 'notoserif'
+        fontFamily:'sans-serif-medium',
+        
     },
     codeContainer: {
         //height: 50,
         width: '100%',
         backgroundColor:'#171717',
         marginTop: 10,
-       
     },
     codeContainerText:{
         fontSize:13,

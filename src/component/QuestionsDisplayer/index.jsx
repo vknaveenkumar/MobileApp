@@ -87,7 +87,13 @@ const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer }) 
           source={require('../../images/javascript3.jpg')}
         />
 
-        {showNavigation && <Text onPress={onBackPress} style={styles.backButton}>Back</Text>}
+        {showNavigation && 
+           <TouchableOpacity onPress={onBackPress}><Image
+                  style={styles.backButton}
+                  onPress={onBackPress}
+                  source={require('../../images/back.png')}
+                /></TouchableOpacity>
+                }
 
       </Animated.View>
       {/* {!showNavigation &&
@@ -145,9 +151,9 @@ const styles = StyleSheet.create({
     right: 0,
   },
   backButton: {
-    marginTop: 15,
-    paddingLeft: 10
-
+     marginTop:20,
+     marginLeft:15,
+     height: 20, width: 20, borderRadius: 20 / 2, 
   },
   //navigation old style
   categoryContain: {

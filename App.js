@@ -43,7 +43,7 @@ export default function App() {
       try {
         if (await AdMobInterstitial.getIsReadyAsync()) {
           await AdMobInterstitial.addEventListener('interstitialDidClose', function () {
-            console.log("on close")
+            //console.log("on close")
             BackHandler.exitApp()
           })
           await AdMobInterstitial.showAdAsync()
@@ -88,14 +88,14 @@ export default function App() {
   const loadDataBasedOnCategoryAndSearchTerm = () => {
    // console.log('sssssssssssssss')
     let selectedCategoryData = data?.filter((itm) => itm.category === selectedCategory)[0]
-    console.log("ssssss",selectedCategoryData)
+   // console.log("ssssss",selectedCategoryData)
     let dataToView = { category: selectedCategoryData.category, name: selectedCategoryData.name, QAndA: selectedCategoryData.QAndA }
     if (searchTerm !== "") {
       const filteredDataBasedOnSearchTerm = selectedCategoryData.QAndA.filter(qanda => `${qanda.questions}`.toUpperCase().indexOf(searchTerm.toUpperCase()) >= 0)
       dataToView.QAndA = filteredDataBasedOnSearchTerm
     }
 
-    console.log("after converting==>",dataToView)
+    //console.log("after converting==>",dataToView)
     return dataToView
   }
 
