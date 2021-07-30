@@ -7,12 +7,14 @@ const TopBar = ({ onHomePress, enableSearch, search }) => {
   return (
     <>
       <View style={styles.appBar}>
+        <View style={{marginRight:'auto'}}><Text>&nbsp;&nbsp;</Text></View>
         <TouchableOpacity onPress={onHomePress}>
-          {enableSearch ?   <Search search={search} /> :
+          {enableSearch ? <Search search={search} /> :
             <Text style={styles.title}>JavaScript Master</Text>
           }
           {/* <Search search={search} /> */}
         </TouchableOpacity>
+        <View style={{marginLeft:'auto'}}><Text>&nbsp;&nbsp;</Text></View>
       </View>
     </>
   );
@@ -27,7 +29,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     elevation: 1
   },
   title: {

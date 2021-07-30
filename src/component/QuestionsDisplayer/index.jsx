@@ -69,7 +69,7 @@ const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer }) 
               },
             })
         }>
-        {data?.QAndA.map(renderListItem)}
+        <Animated.View>{data?.QAndA.map(renderListItem)}</Animated.View>
       </Animated.ScrollView>
 
       <Animated.View

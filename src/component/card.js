@@ -50,15 +50,19 @@ const styles = StyleSheet.create({
     padding: 2,
     color: "#495663",
     fontSize: 15,
-    minHeight: 25,
+    borderBottomStartRadius: 10,
+    borderBottomEndRadius: 10,
+    minHeight: 35,
     overflow: 'hidden',
     fontWeight: "bold",
     opacity: 1,
     padding: 5,
     backgroundColor: 'grey',
     width: '100%',
-    borderBottomStartRadius: 10,
-    borderBottomEndRadius: 10,
+    flex:1,
+    justifyContent:'center',
+    alignContent:'center'
+   
   },
   cardTitleFont: {
     color: 'white',
