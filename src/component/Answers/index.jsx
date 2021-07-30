@@ -3,18 +3,19 @@ import PropTypes from "prop-types";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
-const Answers = ({code, answer, index }) => {
-
+const Answers = ({ code, answer, index }) => {
+    //alert(code)
     return (
         <>
-            <View style={{marginTop:5,display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <View style={{ marginTop: 5 }}>
                 <Text style={styles.answerTitle}>{`Answer:${index + 1}`}</Text>
                 <Text style={styles.answerText}> {'\t'}{'\t'}{answer}</Text>
-                <View style={styles.codeContainer}>
+                {code!=undefined && code !="" && <View style={styles.codeContainer}>
                     <Text style={styles.codeContainerText}>{`
  ${code}
                     `}</Text>
-                </View>
+                </View>}
+
             </View>
         </>
     );
@@ -31,29 +32,26 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
     },
     answerTitle: {
-        fontWeight: 'bold',
-        margin:5,
-        alignSelf:'flex-start'
+        fontWeight: '900',
     },
     answerText: {
         color: "#495663",
         fontSize: 14,
-        lineHeight: 20,
+        lineHeight: 24,
         opacity: 0.8,
         textAlign: "left",
-        fontFamily:'sans-serif-medium',
-        
+        fontFamily: 'sans-serif-medium'
     },
     codeContainer: {
         //height: 50,
         width: '100%',
-        backgroundColor:'#171717',
+        backgroundColor: '#171717',
         marginTop: 10,
     },
-    codeContainerText:{
-        fontSize:13,
-        paddingLeft:10,
-        color:'white',
-        lineHeight:15
+    codeContainerText: {
+        fontSize: 13,
+        paddingLeft: 10,
+        color: 'white',
+        lineHeight: 15
     }
 });

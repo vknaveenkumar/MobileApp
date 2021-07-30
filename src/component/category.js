@@ -6,9 +6,10 @@ export default function Category({ onClick, data }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {data.map((itm, index) => (
-        <Card
+        <Card 
           onClick={() => onClick(itm.category)}
           category={itm.category}
+          count={itm.QAndA.length}
           title={itm.name}
           key={index}
           index={index + 1}
@@ -22,5 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flexWrap: 'wrap',
     flexDirection: 'row',
+    paddingBottom:50
+    //height:'100%'
   },
 });

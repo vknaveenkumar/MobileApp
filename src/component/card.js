@@ -9,16 +9,24 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { } from './javascript.jpg'
+import CircleWithNumber from "../component/CircleWithNumber";
 
-export default function Card({ title, category, onClick, index }) {
+export default function Card({ title, category, onClick, index,count }) {
   return (
     <TouchableOpacity style={styles.card} onPress={onClick}>
-      <ImageBackground imageStyle={{ borderTopLeftRadius: 15, borderTopRightRadius: 15 }} source={require('./javascript.jpg')} resizeMode='cover' style={styles.image}>
-        <View style={styles.cardTitle}>
-          <Text style={styles.cardTitleFont}> Questions: 19 </Text>
-          <Text style={styles.cardTitleFont}>{title}</Text>
-        </View>
-      </ImageBackground>
+      <View>
+
+        <ImageBackground imageStyle={{ borderTopLeftRadius: 15, borderTopRightRadius: 15 }} source={require('./javascript.jpg')} resizeMode='cover' style={styles.image}>
+
+        </ImageBackground>
+
+      </View>
+      <View style={styles.count}>
+        <CircleWithNumber style={[styles.circle]}><Text styles={styles.count}>{count}</Text></CircleWithNumber>
+      </View>
+      <View style={styles.cardTitle}>
+        <Text style={styles.cardTitleFont}>{title}</Text>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -27,10 +35,10 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#fff",
     margin: 30,
+    marginTop: 40,
     elevation: 20,
-    height: 150,
-    //flexBasis: '35%',
-    width:'33%',
+    height: 120,
+    width: '33%',
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15
   },
@@ -39,20 +47,38 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   cardTitle: {
-    padding: 5,
-    paddingLeft: 10,
+    padding: 2,
     color: "#495663",
     fontSize: 15,
+    minHeight: 25,
+    overflow: 'hidden',
     fontWeight: "bold",
-    opacity: 0.5,
-   // backgroundColor: '#F0DB4F', //javascript yellow
-    backgroundColor: '#696969', 
+    opacity: 1,
+    padding: 5,
+    backgroundColor: 'grey',
     width: '100%',
-    position: 'absolute',
-    bottom: 0,
+    borderBottomStartRadius: 10,
+    borderBottomEndRadius: 10,
   },
-  cardTitleFont:{
-    color:'white',
-    fontWeight:'bold'
+  cardTitleFont: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  count: {
+    position: 'absolute',
+    right:5,
+    top:5,
+  },
+  circle:{
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 25,
+    height: 25,
+    backgroundColor: 'white',
+    borderRadius: 25,
+    borderColor: '#efd81d'
   }
 });

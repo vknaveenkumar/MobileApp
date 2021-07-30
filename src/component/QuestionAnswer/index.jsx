@@ -5,6 +5,7 @@ import ViewShot, { captureRef } from "react-native-view-shot";
 //import Share from 'react-native-share';
 import { AdMobBanner } from "expo-ads-admob";
 import Answers from "../Answers";
+import CircleWithNumber from "../CircleWithNumber";
 
 
 const QuestionAnswer = ({ data, index }) => {
@@ -45,7 +46,7 @@ const QuestionAnswer = ({ data, index }) => {
       // }
     }
 
-    
+
   };
   return (
     <>
@@ -55,27 +56,11 @@ const QuestionAnswer = ({ data, index }) => {
             onPress={handleExpand}
             style={styles.questionContain}
           >
-            <TouchableOpacity
-              style={{
-                marginRight: 10,
-                borderWidth: 1,
-                borderColor: 'rgba(0,0,0,0.2)',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 25,
-                height: 25,
-                backgroundColor: '#DCDCDC',
-                borderRadius: 25,
-                borderColor: '#efd81d'
-              }}
-            >
-              <Text style={styles.index}>{index}</Text>
-            </TouchableOpacity>
-            {/* <Text style={styles.index}>{index}</Text> */}
+            <CircleWithNumber style={[styles.circle]}><Text style={styles.index}>{index}</Text></CircleWithNumber>
             <Text style={styles.questionText}>{data?.questions}</Text>
           </TouchableOpacity>
         </View>
-        {expand ? (
+        {expand ? ( 
           <>
             <View style={styles.answerContainer}>
               {data?.answers?.map((answer, index) =>
@@ -114,16 +99,15 @@ export default QuestionAnswer;
 
 const styles = StyleSheet.create({
   container: {
-    width: "94%",
     backgroundColor: "#fff",
-    margin: 8,
+    margin: 6,
     elevation: 10,
+    display: 'flex',
+    flexWrap: 'wrap',
     justifyContent: "flex-start",
-    //borderRadius:5,
-    //padding: 5,
-    overflow: "hidden",
   },
   questionContain: {
+    display: 'flex',
     flexDirection: "row",
     alignItems: "center",
     position: "relative",
@@ -135,11 +119,13 @@ const styles = StyleSheet.create({
   },
   questionText: {
     color: "#495663",
-    fontWeight: "bold", 
+    fontWeight: "bold",
+    flexShrink: 1,
     lineHeight: 20,
     fontSize: 16,
     opacity: 0.9,
-    fontFamily:'monospace',
+    fontFamily: 'monospace',
+    marginLeft:10
   },
   answerContainer: {
     padding: 5,
@@ -152,7 +138,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     //lineHeight: 24,
     opacity: 0.8,
-    display: 'flex'
   },
   index: {
     color: "#efd81d",
@@ -160,4 +145,15 @@ const styles = StyleSheet.create({
     opacity: 0.4,
     color: "#495663",
   },
+  circle:{
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 25,
+    height: 25,
+    backgroundColor: '#DCDCDC',
+    borderRadius: 25,
+    borderColor: '#efd81d'
+  }
 });
