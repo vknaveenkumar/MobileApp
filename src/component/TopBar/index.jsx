@@ -7,14 +7,32 @@ const TopBar = ({ onHomePress, enableSearch, search }) => {
   return (
     <>
       <View style={styles.appBar}>
-        <View style={{marginRight:'auto'}}><Text>&nbsp;&nbsp;</Text></View>
+        <View style={{ marginRight: 'auto' }}>
+          <TouchableOpacity onPress={onHomePress}>
+            <View  >
+              <Image
+                style={{ height: 25, width: 25, borderRadius: 25 / 2, margin: 5, marginLeft: 15, alignSelf: 'center' }}
+                source={require('../../images/back.png')}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity onPress={onHomePress}>
           {enableSearch ? <Search search={search} /> :
             <Text style={styles.title}>JavaScript Master</Text>
           }
           {/* <Search search={search} /> */}
         </TouchableOpacity>
-        <View style={{marginLeft:'auto'}}><Text>&nbsp;&nbsp;</Text></View>
+        <View style={{ marginLeft: 'auto' }}>
+          <TouchableOpacity >
+            <View  >
+              <Image
+                style={{ height: 25, width: 25, borderRadius: 25 / 2, margin: 5, marginRight: 15, alignSelf: 'center' }}
+                source={require('../../images/dark.png')}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );

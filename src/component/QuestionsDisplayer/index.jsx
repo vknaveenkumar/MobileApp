@@ -87,13 +87,13 @@ const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer }) 
           source={require('../../images/javascript3.jpg')}
         />
 
-        {showNavigation && 
+        {/* {showNavigation && 
            <TouchableOpacity onPress={onBackPress}><Image
                   style={styles.backButton}
                   onPress={onBackPress}
                   source={require('../../images/back.png')}
                 /></TouchableOpacity>
-                }
+                } */}
 
       </Animated.View>
       {/* {!showNavigation &&
