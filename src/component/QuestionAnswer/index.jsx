@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
-import ViewShot, { captureRef } from "react-native-view-shot";
+// import ViewShot, { captureRef } from "react-native-view-shot";
 //import RNFS from 'react-native-fs';
 //import Share from 'react-native-share';
 import { AdMobBanner } from "expo-ads-admob";
@@ -15,39 +15,39 @@ const QuestionAnswer = ({ data, index }) => {
     setExpand((prev) => !prev);
   };
 
-  const onShare = async () => {
+  // const onShare = async () => {
 
-    //console.log("onshsbashd",viewRef)
+  //   //console.log("onshsbashd",viewRef)
 
-    const snapshot = await captureRef(viewRef, {
-      result: 'data-uri',
-    });
+  //   // const snapshot = await captureRef(viewRef, {
+  //   //   result: 'data-uri',
+  //   // });
 
-    // console.log("====>snapshot", snapshot)
-    // Share.s
+  //   // console.log("====>snapshot", snapshot)
+  //   // Share.s
 
-    if (snapshot) {
+  //   if (snapshot) {
 
-      // const shareOptions = {
-      //   title: 'Share file',
-      //   url: snapshot,
-      //   social: Share.Social.WHATSAPP,
-      //   failOnCancel: false,
-      // };
+  //     // const shareOptions = {
+  //     //   title: 'Share file',
+  //     //   url: snapshot,
+  //     //   social: Share.Social.WHATSAPP,
+  //     //   failOnCancel: false,
+  //     // };
 
-      // console.log("before shareing")
+  //     // console.log("before shareing")
 
-      // try {
-      //   const ShareResponse = await Share.open(shareOptions);
-      //   console.log('ShareResponse',ShareResponse)
-      // } catch (error) {
-      //   console.log('Error =>', error);
-      //   setResult('error: '.concat(getErrorString(error)));
-      // }
-    }
+  //     // try {
+  //     //   const ShareResponse = await Share.open(shareOptions);
+  //     //   console.log('ShareResponse',ShareResponse)
+  //     // } catch (error) {
+  //     //   console.log('Error =>', error);
+  //     //   setResult('error: '.concat(getErrorString(error)));
+  //     // }
+  //   }
 
 
-  };
+  // };
   return (
     <>
       <ViewShot ref={viewRef} style={styles.container} >
@@ -69,7 +69,7 @@ const QuestionAnswer = ({ data, index }) => {
 
             </View>
 
-            <TouchableOpacity onPress={onShare}>
+            <TouchableOpacity>
               <View style={styles.options} >
                 <Image
                   style={{ height: 20, width: 20, borderRadius: 20 / 2, margin: 5, alignSelf: 'center' }}
@@ -100,7 +100,7 @@ export default QuestionAnswer;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    margin: 6,
+    margin: 10,
     elevation: 10,
     display: 'flex',
     flexWrap: 'wrap',

@@ -25,7 +25,7 @@ export default function Card({ title, category, onClick, index,count }) {
         <CircleWithNumber style={[styles.circle]}><Text styles={styles.count}>{count}</Text></CircleWithNumber>
       </View>
       <View style={styles.cardTitle}>
-        <Text style={styles.cardTitleFont}>{title}</Text>
+        <Text style={styles.cardTitleFont}>{title.toUpperCase()}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   cardTitleFont: {
     color: 'white',
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
     textAlign: 'center',
   },
   count: {

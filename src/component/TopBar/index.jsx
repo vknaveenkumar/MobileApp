@@ -28,7 +28,7 @@ const TopBar = ({ onHomePress, enableSearch, search }) => {
             <View  >
               <Image
                 style={{ height: 25, width: 25, borderRadius: 25 / 2, margin: 5, marginRight: 15, alignSelf: 'center' }}
-                source={require('../../images/dark.png')}
+                source={require('../../images/exit2.png')}
               />
             </View>
           </TouchableOpacity>

@@ -9,7 +9,7 @@ const Answers = ({ code, answer, index }) => {
         <>
             <View style={{ marginTop: 5 }}>
                 <Text style={styles.answerTitle}>{`Answer:${index + 1}`}</Text>
-                <Text style={styles.answerText}> {'\t'}{'\t'}{answer}</Text>
+                <Text  textBreakStrategy="highQuality" style={styles.answerText}> {'\t'}{'\t'}{answer}</Text>
                 {code!=undefined && code !="" && <View style={styles.codeContainer}>
                     <Text style={styles.codeContainerText}>{`
  ${code}

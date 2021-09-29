@@ -39,30 +39,30 @@ export default function App() {
   }
 
   useEffect(() => {
-    const backAction = async () => {
-      try {
-        if (await AdMobInterstitial.getIsReadyAsync()) {
-          await AdMobInterstitial.addEventListener('interstitialDidClose', function () {
-            //console.log("on close")
-            BackHandler.exitApp()
-          })
-          await AdMobInterstitial.showAdAsync()
-        }
-      } catch (err) {
+    // const backAction = async () => {
+    //   try {
+    //     if (await AdMobInterstitial.getIsReadyAsync()) {
+    //       await AdMobInterstitial.addEventListener('interstitialDidClose', function () {
+    //         //console.log("on close")
+    //         BackHandler.exitApp()
+    //       })
+    //       await AdMobInterstitial.showAdAsync()
+    //     }
+    //   } catch (err) {
 
-      }
-    };
+    //   }
+    // };
 
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
+    // const backHandler = BackHandler.addEventListener(
+    //   "hardwareBackPress",
+    //   backAction
+    // );
 
     getApiData();
     showInterestialOnLoad();
 
     return () => {
-      backHandler.remove();
+      //backHandler.remove();
       AdMobInterstitial.removeAllListeners();
     };
   }, []);
