@@ -50,7 +50,7 @@ const QuestionAnswer = ({ data, index }) => {
   // };
   return (
     <>
-      <ViewShot ref={viewRef} style={styles.container} >
+      <View style={styles.container} >
         <View style={styles.question}>
           <TouchableOpacity
             onPress={handleExpand}
@@ -69,18 +69,18 @@ const QuestionAnswer = ({ data, index }) => {
 
             </View>
 
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <View style={styles.options} >
                 <Image
                   style={{ height: 20, width: 20, borderRadius: 20 / 2, margin: 5, alignSelf: 'center' }}
                   source={require('../../images/share-2.png')}
                 />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
           </>
         ) : null}
-      </ViewShot>
+      </View>
       {index % 10 === 0 ? (
         <AdMobBanner
           bannerSize="fullBanner"
