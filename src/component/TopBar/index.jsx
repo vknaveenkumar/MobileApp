@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Image, Text, TouchableOpacity, View, TextInput } from "react-native";
+import { StyleSheet, Image, Text, TouchableOpacity, View } from "react-native";
 import Search from '../Search'
 
 
-const TopBar = ({ onHomePress, enableSearch, search }) => {
+const TopBar = ({ onHomePress, enableSearch, search,exitApp}) => {
   return (
     <>
       <View style={styles.appBar}>
@@ -21,10 +21,9 @@ const TopBar = ({ onHomePress, enableSearch, search }) => {
           {enableSearch ? <Search search={search} /> :
             <Text style={styles.title}>JavaScript Master</Text>
           }
-          {/* <Search search={search} /> */}
         </TouchableOpacity>
         <View style={{ marginLeft: 'auto' }}>
-          <TouchableOpacity >
+          <TouchableOpacity onPress={exitApp}>
             <View  >
               <Image
                 style={{ height: 25, width: 25, borderRadius: 25 / 2, margin: 5, marginRight: 15, alignSelf: 'center' }}

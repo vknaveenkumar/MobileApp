@@ -1,24 +1,58 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-
+ 
 
 export const getData = async (key) => {
     try {
-        await clearCache()
-        let data = await retrieveData(key)
-        if (data === null || data === undefined) {
+        //await clearCache()
+        let callApiForJson = await checkVersionFromLocal();
+        if (callApiForJson) {
             let res = await fetch("https://mobileapp-7db4e-default-rtdb.firebaseio.com/.json");
-            const records = await res.json(); 
-            data = records;
-            await storeData(key, records)
+            const data = await res.json();
+            await storeData(key, data)
+            return { data: data.languages[0].data, showAd: data.showAd, frequencyOfAds: data.frequencyOfAds }
+        } else {
+            const data = await retrieveData(key)
+            return { data: data.languages[0].data, showAd: data.showAd, frequencyOfAds: data.frequencyOfAds }
         }
-        return data
     } catch (error) {
         return []
     }
 }
 
+
+/**
+ * 
+ * @param {*} key 
+ * @param {*} value 
+ * @returns Check version
+ */
+
+
+const checkVersionFromLocal = async () => {
+    try {
+        //get Server version on every load
+        const getServerVersionNumber = await fetch("https://mobileapp-7db4e-default-rtdb.firebaseio.com/appVersion.json");
+        const serverVersionNumber = await getServerVersionNumber.json();
+
+        //comapting with local
+        let checkVersionExists = await retrieveData('@appVersion')
+
+        if (checkVersionExists === null || checkVersionExists === null || checkVersionExists === undefined) {
+            await storeData('@appVersion', serverVersionNumber)
+            return true
+        } else {
+            if (checkVersionExists === serverVersionNumber) {
+                return false
+            }
+            return true
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
+}
 
 
 /**
@@ -44,7 +78,7 @@ const retrieveData = async (key) => {
         if (value !== null) {
             value = JSON.parse(value)
         }
-        return value 
+        return value
     } catch (error) {
         console.log(err)
         return null

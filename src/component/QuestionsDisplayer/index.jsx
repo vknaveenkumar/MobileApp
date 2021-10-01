@@ -1,12 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   StatusBar,
-  TouchableOpacity,
-  Image,
-  View,
-  Text,
   Animated,
 } from 'react-native';
 import QuestionAnswer from "../QuestionAnswer";
@@ -18,9 +14,10 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + 100;
 
 
 
-const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer }) => {
+const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer,showAd ,frequencyOfAds }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const [showNavigation, setShowNavigation] = useState(true)
+  //alert(frequencyOfAds)
 
   const headerTranslateY = scrollY.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE],
@@ -41,7 +38,7 @@ const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer }) 
 
 
   const renderListItem = (item, key) => (
-    <QuestionAnswer data={item} key={key} index={key + 1} />
+    <QuestionAnswer data={item} key={key} index={key + 1} showAd={showAd} frequencyOfAds={frequencyOfAds} />
   );
 
 
@@ -96,21 +93,7 @@ const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer }) 
                 } */}
 
       </Animated.View>
-      {/* {!showNavigation &&
-        <View style={styles.categoryContain}>
-          <TouchableOpacity
-            onPress={onBackPress}
-            style={{ ...styles.thridWidth, textAlign: "left" }}
-          >
-            <Text style={{ ...styles.category, textAlign: "left" }}>Back</Text>
-          </TouchableOpacity>
-          <Text style={styles.category}>{data?.name}</Text>
-          <TouchableOpacity onPress={onBackPress} style={styles.thridWidth}>
-            <Text style={{ ...styles.category, textAlign: "right" }}>
-              {data?.qAndA?.length} Questions
-        </Text>
-          </TouchableOpacity>
-        </View>} */}
+
     </SafeAreaView>
   );
 }
@@ -151,9 +134,9 @@ const styles = StyleSheet.create({
     right: 0,
   },
   backButton: {
-     marginTop:20,
-     marginLeft:15,
-     height: 20, width: 20, borderRadius: 20 / 2, 
+    marginTop: 20,
+    marginLeft: 15,
+    height: 20, width: 20, borderRadius: 20 / 2,
   },
   //navigation old style
   categoryContain: {

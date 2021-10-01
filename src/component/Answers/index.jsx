@@ -4,13 +4,12 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
 const Answers = ({ code, answer, index }) => {
-    //alert(code)
     return (
         <>
             <View style={{ marginTop: 5 }}>
                 <Text style={styles.answerTitle}>{`Answer:${index + 1}`}</Text>
-                <Text  textBreakStrategy="highQuality" style={styles.answerText}> {'\t'}{'\t'}{answer}</Text>
-                {code!=undefined && code !="" && <View style={styles.codeContainer}>
+                <Text textBreakStrategy="highQuality" style={styles.answerText}> {'\t'}{'\t'}{answer}</Text>
+                {code != undefined && code != "" && <View style={styles.codeContainer}>
                     <Text style={styles.codeContainerText}>{`
  ${code}
                     `}</Text>

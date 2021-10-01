@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
-  Button,
   StyleSheet,
-  Text,
   StatusBar,
   View,
   BackHandler,
+  Image
 } from "react-native";
 import Category from "./src/component/category";
 import QuestionsDisplayer from "./src/component/QuestionsDisplayer";
@@ -26,17 +25,25 @@ export default function App() {
   const [enableSearch, setEnableSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState('')
   const [showAd, setShowAd] = useState(false);
+  const [frequencyOfAds, setFrequencyOfAds] = useState(null);
 
   const getApiData = async () => {
-    let data = await getData('@AppData')
-    setData(data)
+    let data = await getData('@AppData');
+    setData(data.data)
+    setShowAd(data.showAd)
+    setFrequencyOfAds(data.frequencyOfAds)
   }
 
-  const showInterestialOnLoad = async () => {
-    await AdMobInterstitial.setAdUnitID(interestialAdID);
-    await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
 
+  const exitApp = () => {
+    BackHandler.exitApp()
   }
+
+  // const showInterestialOnLoad = async () => {
+  //   await AdMobInterstitial.setAdUnitID(interestialAdID);
+  //   await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
+
+  // }
 
   useEffect(() => {
     // const backAction = async () => {
@@ -59,22 +66,22 @@ export default function App() {
     // );
 
     getApiData();
-    showInterestialOnLoad();
+    // showInterestialOnLoad();
 
     return () => {
       //backHandler.remove();
-      AdMobInterstitial.removeAllListeners();
+      // AdMobInterstitial.removeAllListeners();
     };
   }, []);
 
   const handleCategory = (category) => {
     setSelectedCaetgory(category);
-    if(category == ''){
+    if (category == '') {
       setEnableSearch(false)
-    }else{
+    } else {
       setEnableSearch(true)
     }
-     
+
   };
 
   const onScrollInQuestionDisplayer = (status) => {
@@ -86,9 +93,9 @@ export default function App() {
   }
 
   const loadDataBasedOnCategoryAndSearchTerm = () => {
-   // console.log('sssssssssssssss')
+    // console.log('sssssssssssssss')
     let selectedCategoryData = data?.filter((itm) => itm.category === selectedCategory)[0]
-   // console.log("ssssss",selectedCategoryData)
+    // console.log("ssssss",selectedCategoryData)
     let dataToView = { category: selectedCategoryData.category, name: selectedCategoryData.name, QAndA: selectedCategoryData.QAndA }
     if (searchTerm !== "") {
       const filteredDataBasedOnSearchTerm = selectedCategoryData.QAndA.filter(qanda => `${qanda.questions}`.toUpperCase().indexOf(searchTerm.toUpperCase()) >= 0)
@@ -114,25 +121,33 @@ export default function App() {
         search={search}
         showBack={!!selectedCategory}
         enableSearch={enableSearch}
+        exitApp={exitApp}
       />
+      {/* source={require('./javascript.jpg')} */}
+      {/* <Image source={{uri: require('./Book.gif')}} style={styles.image} /> */}
       <View style={styles.content}>
         {selectedCategory ? (
           <QuestionsDisplayer
             data={loadDataBasedOnCategoryAndSearchTerm()}
             onScrollInQuestionDisplayer={onScrollInQuestionDisplayer}
             onBackPress={() => { setSelectedCaetgory(""); setEnableSearch(false) }}
+            showAd = {showAd}
+            frequencyOfAds = {frequencyOfAds}
           />
         ) : (
           <Category onClick={handleCategory} data={data} />
         )}
       </View>
-      <AdMobBanner
-        bannerSize="fullBanner"
-        adUnitID={bannerAdId}
-        onDidFailToReceiveAdWithError={() => {
-          //alert("error");
-        }}
-      />
+      {
+        showAd && <AdMobBanner
+          bannerSize="fullBanner"
+          adUnitID={bannerAdId}
+          onDidFailToReceiveAdWithError={() => {
+            //alert("error");
+          }}
+        />
+      }
+
     </View>
   );
 }
@@ -140,10 +155,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-   backgroundColor: "#f6d867",
+    backgroundColor: "#f6d867",
   },
   content: {
     flex: 15,
-    backgroundColor: "#263842",
+    backgroundColor: "#36454f",
   },
 });

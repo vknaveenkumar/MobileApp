@@ -8,7 +8,7 @@ import Answers from "../Answers";
 import CircleWithNumber from "../CircleWithNumber";
 
 
-const QuestionAnswer = ({ data, index }) => {
+const QuestionAnswer = ({ data, index,showAd,frequencyOfAds }) => {
   const [expand, setExpand] = useState(false);
   const viewRef = useRef(null)
   const handleExpand = () => {
@@ -69,19 +69,10 @@ const QuestionAnswer = ({ data, index }) => {
 
             </View>
 
-            {/* <TouchableOpacity>
-              <View style={styles.options} >
-                <Image
-                  style={{ height: 20, width: 20, borderRadius: 20 / 2, margin: 5, alignSelf: 'center' }}
-                  source={require('../../images/share-2.png')}
-                />
-              </View>
-            </TouchableOpacity> */}
-
           </>
         ) : null}
       </View>
-      {index % 10 === 0 ? (
+      {showAd && index % frequencyOfAds === 0 ? (
         <AdMobBanner
           bannerSize="fullBanner"
           adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
