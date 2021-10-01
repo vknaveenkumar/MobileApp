@@ -22,7 +22,6 @@ export default function App() {
 
   const [data, setData] = useState([]);
   const [selectedCategory, setSelectedCaetgory] = useState("");
-  const [enableSearch, setEnableSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState('')
   const [showAd, setShowAd] = useState(false);
   const [frequencyOfAds, setFrequencyOfAds] = useState(null);
@@ -76,12 +75,6 @@ export default function App() {
 
   const handleCategory = (category) => {
     setSelectedCaetgory(category);
-    if (category == '') {
-      setEnableSearch(false)
-    } else {
-      setEnableSearch(true)
-    }
-
   };
 
   const onScrollInQuestionDisplayer = (status) => {
@@ -116,15 +109,13 @@ export default function App() {
       <TopBar
         onHomePress={() => {
           setSelectedCaetgory("");
-          setEnableSearch(false)
         }}
         search={search}
         showBack={!!selectedCategory}
-        enableSearch={enableSearch}
+        selectedCategory={selectedCategory}
         exitApp={exitApp}
       />
-      {/* source={require('./javascript.jpg')} */}
-      {/* <Image source={{uri: require('./Book.gif')}} style={styles.image} /> */}
+    
       <View style={styles.content}>
         {selectedCategory ? (
           <QuestionsDisplayer

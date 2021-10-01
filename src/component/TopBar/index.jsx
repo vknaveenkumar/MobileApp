@@ -3,7 +3,7 @@ import { StyleSheet, Image, Text, TouchableOpacity, View } from "react-native";
 import Search from '../Search'
 
 
-const TopBar = ({ onHomePress, enableSearch, search,exitApp}) => {
+const TopBar = ({ onHomePress, enableSearch, search,exitApp,selectedCategory}) => {
   return (
     <>
       <View style={styles.appBar}>
@@ -18,7 +18,7 @@ const TopBar = ({ onHomePress, enableSearch, search,exitApp}) => {
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={onHomePress}>
-          {enableSearch ? <Search search={search} /> :
+          { selectedCategory !== "" ? <Search search={search} /> :
             <Text style={styles.title}>JavaScript Master</Text>
           }
         </TouchableOpacity>
