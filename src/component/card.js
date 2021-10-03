@@ -8,7 +8,6 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import { } from './javascript.jpg'
 import CircleWithNumber from "../component/CircleWithNumber";
 
 export default function Card({ title, category, onClick, index,count }) {
@@ -16,7 +15,7 @@ export default function Card({ title, category, onClick, index,count }) {
     <TouchableOpacity style={styles.card} onPress={onClick}>
       <View>
 
-        <ImageBackground imageStyle={{ borderTopLeftRadius: 15, borderTopRightRadius: 15 }} source={require('./javascript.jpg')} resizeMode='cover' style={styles.image}>
+        <ImageBackground imageStyle={{ borderTopLeftRadius: 15, borderTopRightRadius: 15 }} source={require('../images/javascript.jpg')} resizeMode='cover' style={styles.image}>
 
         </ImageBackground>
 

@@ -4,33 +4,71 @@ import {
   StatusBar,
   View,
   BackHandler,
-  Image
+  Image,
+  Button,
+  Text
 } from "react-native";
 import Category from "./src/component/category";
 import QuestionsDisplayer from "./src/component/QuestionsDisplayer";
 import TopBar from "./src/component/TopBar";
 import {
   AdMobBanner,
-  AdMobInterstitial,
 } from "expo-ads-admob";
-import { bannerAdId, interestialAdID } from "./src/env";
-import { getData } from "./src/services";
+import { bannerAdId } from "./src/env";
+import { getData, checkForFirstTimeUser, checkForUpdates } from "./src/services";
 
-
+//await clearCache()
 
 export default function App() {
 
   const [data, setData] = useState([]);
+  const [splashScreen, setSplashScreen] = useState(true);
+
+
+  const [firstTimeUser, setFirstTimeUser] = useState(false);
+  const [updateAlert, setUpdateAlert] = useState(false)
+  const [networkIssue, setNetworkIssue] = useState(false)
+
   const [selectedCategory, setSelectedCaetgory] = useState("");
   const [searchTerm, setSearchTerm] = useState('')
   const [showAd, setShowAd] = useState(false);
   const [frequencyOfAds, setFrequencyOfAds] = useState(null);
 
   const getApiData = async () => {
-    let data = await getData('@AppData');
-    setData(data.data)
-    setShowAd(data.showAd)
-    setFrequencyOfAds(data.frequencyOfAds)
+    try {
+      const firstTimeUserCheck = await checkForFirstTimeUser();
+      if (firstTimeUserCheck.firstTimeUserStatus) {
+        setFirstTimeUser(firstTimeUserCheck);
+        getJSONData('@AppData', true)
+      }
+      else {
+        const checkForUpdatesCheck = await checkForUpdates();
+        if (checkForUpdatesCheck.updateStatus) {
+          setData([])
+          setUpdateAlert(checkForUpdatesCheck)
+        } else {
+          getJSONData('@AppData', false)
+        }
+      }
+    } catch (err) {
+      setNetworkIssue(true)
+    }
+
+  }
+
+  const getJSONData = async (key, callApi) => {
+    try {
+      let data = await getData(key, callApi);
+      setData(data.data)
+      setShowAd(data.showAd)
+      setFrequencyOfAds(data.frequencyOfAds);
+      setFirstTimeUser({ firstTimeUserStatus: false, message: "" });
+      setUpdateAlert({ updateStatus: false, message: "" })
+      setNetworkIssue(false)
+    } catch (err) {
+      setNetworkIssue(true)
+    }
+
   }
 
 
@@ -45,6 +83,7 @@ export default function App() {
   // }
 
   useEffect(() => {
+
     // const backAction = async () => {
     //   try {
     //     if (await AdMobInterstitial.getIsReadyAsync()) {
@@ -64,10 +103,18 @@ export default function App() {
     //   backAction
     // );
 
-    getApiData();
     // showInterestialOnLoad();
 
+
+
+    getApiData();
+
+    const timer = setTimeout(() => {
+      setSplashScreen(false)
+    }, 5000);
+
     return () => {
+      () => clearTimeout(timer);
       //backHandler.remove();
       // AdMobInterstitial.removeAllListeners();
     };
@@ -86,64 +133,114 @@ export default function App() {
   }
 
   const loadDataBasedOnCategoryAndSearchTerm = () => {
-    // console.log('sssssssssssssss')
     let selectedCategoryData = data?.filter((itm) => itm.category === selectedCategory)[0]
-    // console.log("ssssss",selectedCategoryData)
     let dataToView = { category: selectedCategoryData.category, name: selectedCategoryData.name, QAndA: selectedCategoryData.QAndA }
     if (searchTerm !== "") {
       const filteredDataBasedOnSearchTerm = selectedCategoryData.QAndA.filter(qanda => `${qanda.questions}`.toUpperCase().indexOf(searchTerm.toUpperCase()) >= 0)
       dataToView.QAndA = filteredDataBasedOnSearchTerm
     }
-
-    //console.log("after converting==>",dataToView)
     return dataToView
   }
-
+  //alert(JSON.stringify(data))
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          height: StatusBar.currentHeight,
-        }}
-      />
-      <TopBar
-        onHomePress={() => {
-          setSelectedCaetgory("");
-        }}
-        search={search}
-        showBack={!!selectedCategory}
-        selectedCategory={selectedCategory}
-        exitApp={exitApp}
-      />
-    
-      <View style={styles.content}>
-        {selectedCategory ? (
-          <QuestionsDisplayer
-            data={loadDataBasedOnCategoryAndSearchTerm()}
-            onScrollInQuestionDisplayer={onScrollInQuestionDisplayer}
-            onBackPress={() => { setSelectedCaetgory(""); setEnableSearch(false) }}
-            showAd = {showAd}
-            frequencyOfAds = {frequencyOfAds}
-          />
-        ) : (
-          <Category onClick={handleCategory} data={data} />
-        )}
-      </View>
-      {
-        showAd && <AdMobBanner
-          bannerSize="fullBanner"
-          adUnitID={bannerAdId}
-          onDidFailToReceiveAdWithError={() => {
-            //alert("error");
-          }}
+    <>
+      {splashScreen && <View style={styles.splashScreen}>
+        {/* <Text style={{ color: 'white', fontSize: 24 }}>Splash Screen</Text> */}
+        <Image
+          style={{ height: 180, width: 180, alignSelf: 'center' }}
+          source={require('./src//images/javascript.jpg')}
         />
-      }
+        <Text style={{ color: 'red', fontSize: 15 }}>Loading Questions...</Text>
+      </View>}
 
-    </View>
+      {
+        !splashScreen &&
+        <View style={styles.container}>
+          <View
+            style={{
+              height: StatusBar.currentHeight,
+            }}
+          />
+          <TopBar
+            onHomePress={() => {
+              setSelectedCaetgory("");
+            }}
+            search={search}
+            showBack={!!selectedCategory}
+            selectedCategory={selectedCategory}
+            exitApp={exitApp}
+          />
+
+
+          <View style={styles.content}>
+
+            {
+              !networkIssue && data.length === 0 && firstTimeUser.firstTimeUserStatus && <View style={{ margin: 15, marginTop: 50, backgroundColor: 'white' }}>
+                <Text style={{ color: 'black', fontSize: 20, padding: 10 }}>{firstTimeUser.message}</Text>
+              </View>
+            }
+            {
+              !networkIssue && updateAlert.updateStatus && <View style={{ margin: 15, marginTop: 50, backgroundColor: 'white' }}>
+                <Text style={{ color: 'black', fontSize: 20, padding: 10 }}>{updateAlert.message}</Text>
+                <View style={{ margin: 10, display: 'flex', justifyContent: 'space-around', flexDirection: 'row' }}><Button
+                  onPress={() => { getJSONData('@AppData', true) }}
+                  title="Download"
+                  color="green"
+                  style={{ width: '30%' }}
+                />
+
+                  <Button
+                    onPress={() => { getJSONData('@AppData', false) }}
+                    title="Not Now"
+                    color="red"
+                    style={{ width: '30%' }}
+                  /></View>
+
+              </View>
+            }
+            {
+              networkIssue && <View style={{ margin: 15, marginTop: 50, backgroundColor: 'white' }}>
+                <Text style={{ color: 'black', fontSize: 20, padding: 10 }}>Error in Loading connection</Text>
+              </View>
+            }
+
+            {selectedCategory ? (
+              <QuestionsDisplayer
+                data={loadDataBasedOnCategoryAndSearchTerm()}
+                onScrollInQuestionDisplayer={onScrollInQuestionDisplayer}
+                onBackPress={() => { setSelectedCaetgory(""); }}
+                showAd={showAd}
+                frequencyOfAds={frequencyOfAds}
+              />
+            ) : (
+              <Category onClick={handleCategory} data={data} />
+            )}
+          </View>
+          {
+            showAd && <AdMobBanner
+              bannerSize="fullBanner"
+              adUnitID={bannerAdId}
+              onDidFailToReceiveAdWithError={() => {
+                //alert("error");
+              }}
+            />
+          }
+
+        </View>
+
+      }
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  splashScreen: {
+    // flex: 1,
+    backgroundColor: "#f6d867",
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center'
+  },
   container: {
     flex: 1,
     backgroundColor: "#f6d867",
