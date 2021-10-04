@@ -24,7 +24,7 @@ export default function Card({ title, category, onClick, index,count }) {
         <CircleWithNumber style={[styles.circle]}><Text styles={styles.count}>{count}</Text></CircleWithNumber>
       </View>
       <View style={styles.cardTitle}>
-        <Text style={styles.cardTitleFont}>{title.toUpperCase()}</Text>
+        <Text numberOfLines={2} style={styles.cardTitleFont}>{title.toUpperCase()}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 10,
     borderBottomEndRadius: 10,
     minHeight: 35,
-    overflow: 'hidden',
+  //  overflow: 'hidden',
     fontWeight: "bold",
     opacity: 1,
     padding: 5,

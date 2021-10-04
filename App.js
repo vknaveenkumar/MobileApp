@@ -9,15 +9,16 @@ import {
   Text
 } from "react-native";
 import Category from "./src/component/category";
+import Alert from "./src/component/Alert";
 import QuestionsDisplayer from "./src/component/QuestionsDisplayer";
 import TopBar from "./src/component/TopBar";
 import {
-  AdMobBanner,
+  AdMobBanner, 
 } from "expo-ads-admob";
 import { bannerAdId } from "./src/env";
 import { getData, checkForFirstTimeUser, checkForUpdates } from "./src/services";
 
-//await clearCache()
+
 
 export default function App() {
 
@@ -37,19 +38,22 @@ export default function App() {
   const getApiData = async () => {
     try {
       const firstTimeUserCheck = await checkForFirstTimeUser();
+      //alert('1111')
       if (firstTimeUserCheck.firstTimeUserStatus) {
         setFirstTimeUser(firstTimeUserCheck);
-        getJSONData('@AppData', true)
+        getJSONData('@AppData', true)  
       }
       else {
+        //alert('22222')
         const checkForUpdatesCheck = await checkForUpdates();
+       //alert(JSON.stringify(checkForUpdatesCheck))
         if (checkForUpdatesCheck.updateStatus) {
           setData([])
           setUpdateAlert(checkForUpdatesCheck)
         } else {
           getJSONData('@AppData', false)
         }
-      }
+      }  
     } catch (err) {
       setNetworkIssue(true)
     }
@@ -140,17 +144,18 @@ export default function App() {
       dataToView.QAndA = filteredDataBasedOnSearchTerm
     }
     return dataToView
-  }
+  } 
   //alert(JSON.stringify(data))
   return (
     <>
       {splashScreen && <View style={styles.splashScreen}>
         {/* <Text style={{ color: 'white', fontSize: 24 }}>Splash Screen</Text> */}
-        <Image
+        {/* <Image
           style={{ height: 180, width: 180, alignSelf: 'center' }}
           source={require('./src//images/javascript.jpg')}
-        />
-        <Text style={{ color: 'red', fontSize: 15 }}>Loading Questions...</Text>
+        /> */}
+        <Text style={{ color: 'black', fontSize: 150,fontWeight:'bold'}}>JS</Text>
+        {/* <Text style={{ color: 'black', fontSize: 15 }}>Fetching Questions...</Text> */}
       </View>}
 
       {
@@ -161,6 +166,7 @@ export default function App() {
               height: StatusBar.currentHeight,
             }}
           />
+
           <TopBar
             onHomePress={() => {
               setSelectedCaetgory("");
@@ -172,14 +178,16 @@ export default function App() {
           />
 
 
+
           <View style={styles.content}>
+
 
             {
               !networkIssue && data.length === 0 && firstTimeUser.firstTimeUserStatus && <View style={{ margin: 15, marginTop: 50, backgroundColor: 'white' }}>
                 <Text style={{ color: 'black', fontSize: 20, padding: 10 }}>{firstTimeUser.message}</Text>
               </View>
             }
-            {
+            {/* {
               !networkIssue && updateAlert.updateStatus && <View style={{ margin: 15, marginTop: 50, backgroundColor: 'white' }}>
                 <Text style={{ color: 'black', fontSize: 20, padding: 10 }}>{updateAlert.message}</Text>
                 <View style={{ margin: 10, display: 'flex', justifyContent: 'space-around', flexDirection: 'row' }}><Button
@@ -197,12 +205,46 @@ export default function App() {
                   /></View>
 
               </View>
-            }
-            {
-              networkIssue && <View style={{ margin: 15, marginTop: 50, backgroundColor: 'white' }}>
-                <Text style={{ color: 'black', fontSize: 20, padding: 10 }}>Error in Loading connection</Text>
+            } */}   
+            {networkIssue &&
+              <View style={{ margin: 15, marginTop: 50, backgroundColor: 'white' }}>
+                <Image
+                  style={{ height: 180, width: '50%', alignSelf: 'center' }}
+                  source={require('./src/images/no-intenet.png')}
+                />
+                <Text style={{ color: 'black', fontSize: 15, padding: 10, textAlign: 'center' }}>Connect atleast once to load the data</Text>
               </View>
             }
+
+            <Alert
+              modalVisible={!networkIssue && updateAlert.updateStatus}
+             // modalVisible={ true } 
+              title = {"Notification"}
+              message = {"We have updated out question . Please click donwload to update question"}
+              buttons={[{
+                text: 'Not Now',
+                func: () => {getJSONData('@AppData', false) },
+                styles: {
+                  color: 'black',
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  fontFamily: 'Roboto',
+                  textTransform: 'none',
+                 // backgroundColor: 'green'
+                }
+              },{
+                text: 'Download',
+                func: () => { getJSONData('@AppData', true) },
+                styles: {
+                  color: '#FFFFFF',
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  fontFamily: 'Roboto',
+                  textTransform: 'none',
+                  backgroundColor: '#f6d867'
+                }
+              }]}
+            />
 
             {selectedCategory ? (
               <QuestionsDisplayer
@@ -229,6 +271,7 @@ export default function App() {
         </View>
 
       }
+
     </>
   );
 }
