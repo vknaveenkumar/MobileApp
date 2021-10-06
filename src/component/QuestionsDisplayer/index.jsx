@@ -4,6 +4,7 @@ import {
   StyleSheet,
   StatusBar,
   Animated,
+  Text
 } from 'react-native';
 import QuestionAnswer from "../QuestionAnswer";
 //import faker from 'faker';
@@ -14,7 +15,7 @@ const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT + 100;
 
 
 
-const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer,showAd ,frequencyOfAds }) => {
+const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer, showAd, frequencyOfAds }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const [showNavigation, setShowNavigation] = useState(true)
   //alert(frequencyOfAds)
@@ -66,7 +67,12 @@ const QuestionsDisplayer = ({ data, onBackPress, onScrollInQuestionDisplayer,sho
               },
             })
         }>
-        <Animated.View >{data?.QAndA.map(renderListItem)}</Animated.View>
+        {data?.QAndA.length > 0 ? <Animated.View >{data?.QAndA.map(renderListItem)}</Animated.View> :
+          <Animated.View style={{ backgroundColor: 'grey', marginTop: "50%", width: '85%', alignSelf: 'center' }}>
+            <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold', padding: 30, textAlign: 'center' }}>No Result For The Given Search</Text>
+          </Animated.View>}
+
+        {/* <Animated.View >{data?.QAndA.map(renderListItem)}</Animated.View> */}
       </Animated.ScrollView>
 
       <Animated.View

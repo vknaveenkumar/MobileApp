@@ -9,7 +9,6 @@ import {
   Text
 } from "react-native";
 import Category from "./src/component/category";
-import Alert from "./src/component/Alert";
 import CircleWithNumber from "./src/component/CircleWithNumber";
 import QuestionsDisplayer from "./src/component/QuestionsDisplayer";
 import CustomButton from "./src/component/Button";
@@ -211,7 +210,6 @@ export default function App() {
                 <CustomButton text='Download' onPress={()=>{ getJSONData('@AppData', true)}} style={{ buttonAllignment: styles.updateButtonAllignment, textAllignment: styles.updateTextAllignment }} />
                 <CustomButton text='Not Now' onPress={()=>{  getJSONData('@AppData', false)}} style={{ buttonAllignment: styles.updateButtonAllignment, textAllignment: styles.updateTextAllignment }} />
               </View>
-
             }  
 
 
